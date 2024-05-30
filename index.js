@@ -117,19 +117,46 @@ const CourseInfo = {
 // }
 
 // getLearnerData (CourseInfo, AssignmentGroup, [LearnerSubmissions]);
-// let entry={};
+
 finalArray=[];
+let firstStudenttotalscore=0;
+let studenttwototalscore=0;
+let possible=0;
+
 LearnerSubmissions.forEach((element) => {
-    // console.log(element.learner_id);
-    // entry.id=element.learner_id;
    finalArray.push({id:element.learner_id});
-  
+});
+
+
+LearnerSubmissions.forEach((element) => {
+if (element.learner_id == 125) {
+    firstStudenttotalscore = firstStudenttotalscore +element.submission.score
+    }
+else {
+    studenttwototalscore =  studenttwototalscore+element.submission.score;
+    }
+});
+
+AssignmentGroup.assignments.forEach((element) => {
+    possible +=element.points_possible;
+    return possible;
+});
+
+let currentDate = new Date();
+let currentYear= currentDate.getFullYear();
+let dueDateYear = Number(AssignmentGroup.assignments[2].due_at.slice(0,4))
+
+if(dueDateYear >currentYear ){
+    studenttwototalscore= studenttwototalscore+AssignmentGroup.assignments[2].points_possible
 }
 
-)
-// console.log(entry)
+
+console.log(`${possible} Max points possible`)
+console.log(`first student avg: ${(firstStudenttotalscore/possible)*100}. 
+Second student avg:${(studenttwototalscore/possible)*100}`)
+
 console.log(finalArray)
-//gets the learner id from each entry
+
 
 // const keys = Object.keys(LearnerSubmissions[0]);
 // for (const obj of LearnerSubmissions) {
