@@ -107,16 +107,7 @@ const CourseInfo = {
 
 // If an assignment is not yet due, do not include it in the results or the average. Additionally, if the learner’s submission is late (submitted_at is past due_at), deduct 10 percent of the total points possible from their score for that assignment.
 
-//Create a function named getLearnerData() that accepts these values as parameters, in the order listed: (CourseInfo, AssignmentGroup, [LearnerSubmission]), and returns the formatted result, which should be an array of objects as described above.
 
-// function getLearnerData (CourseInfo, AssignmentGroup, [LearnerSubmissions]) {
-//     let eachLearner ={};
-//     let element ={}
-//     element['active'] = true;
-//    console.log(element)
-// }
-
-// getLearnerData (CourseInfo, AssignmentGroup, [LearnerSubmissions]);
 
 finalArray=[];
 let firstStudenttotalscore=0;
@@ -157,10 +148,50 @@ Second student avg:${(studenttwototalscore/possible)*100}`)
 
 console.log(finalArray)
 
+//Ok, now that I have the pieces I want, lets put it all together in a function like they want
 
-// const keys = Object.keys(LearnerSubmissions[0]);
-// for (const obj of LearnerSubmissions) {
-//     console.log(`${keys[0]}`)
-// }
-// //gets the key value from the first entry
-// let entry = {}
+
+
+function getLearnerData(info, group, [learnerSub]) {
+    finalArray=[];
+    let firstStudenttotalscore=0;
+    let studenttwototalscore=0;
+    let possible=0;
+    let currentDate = new Date();
+    let currentYear= currentDate.getFullYear();
+    let dueDateYear = Number(group.assignments[2].due_at.slice(0,4))
+
+    group.assignments.forEach((element) => {
+        possible +=element.points_possible;
+    });
+
+    if(dueDateYear >currentYear ){
+        studenttwototalscore= studenttwototalscore+group.assignments[2].points_possible
+    }
+
+    learnerSub.forEach((element) => {
+        if (element.learner_id == 125) {
+            firstStudenttotalscore = firstStudenttotalscore +element.submission.score;
+            firstStudenttotalscore= firstStudenttotalscore
+            }
+        else {
+            studenttwototalscore =  studenttwototalscore+element.submission.score
+            }
+        });
+
+    const person1 = {
+        id:125,
+        avg:`${Math.round((firstStudenttotalscore/possible)*100)}`
+    }
+    const person2 = {
+        id:132,
+        avg: `${(studenttwototalscore/possible)*100}`
+    }
+   finalArray.push(person1);
+   finalArray.push(person2);
+  console.log(finalArray)
+ 
+}
+getLearnerData(CourseInfo, AssignmentGroup, [LearnerSubmissions]);
+
+  
