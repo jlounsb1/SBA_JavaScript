@@ -108,45 +108,40 @@ const CourseInfo = {
 // If an assignment is not yet due, do not include it in the results or the average. Additionally, if the learner’s submission is late (submitted_at is past due_at), deduct 10 percent of the total points possible from their score for that assignment.
 
 
+//variables declared in global scope used in function
+// finalArray=[];
+// let firstStudenttotalscore=0;
+// let studenttwototalscore=0;
+// let possible=0;
+// //score of each student
+// LearnerSubmissions.forEach((element) => {
+// if (element.learner_id == 125) {
+//     firstStudenttotalscore = firstStudenttotalscore +element.submission.score
+//     }
+// else {
+//     studenttwototalscore =  studenttwototalscore+element.submission.score;
+//     }
+// });
 
-finalArray=[];
-let firstStudenttotalscore=0;
-let studenttwototalscore=0;
-let possible=0;
+// AssignmentGroup.assignments.forEach((element) => {
+//     possible +=element.points_possible;
+//     return possible;
+// });
 
-LearnerSubmissions.forEach((element) => {
-   finalArray.push({id:element.learner_id});
-});
+// let currentDate = new Date();
+// let currentYear= currentDate.getFullYear();
+// let dueDateYear = Number(AssignmentGroup.assignments[2].due_at.slice(0,4))
 
-
-LearnerSubmissions.forEach((element) => {
-if (element.learner_id == 125) {
-    firstStudenttotalscore = firstStudenttotalscore +element.submission.score
-    }
-else {
-    studenttwototalscore =  studenttwototalscore+element.submission.score;
-    }
-});
-
-AssignmentGroup.assignments.forEach((element) => {
-    possible +=element.points_possible;
-    return possible;
-});
-
-let currentDate = new Date();
-let currentYear= currentDate.getFullYear();
-let dueDateYear = Number(AssignmentGroup.assignments[2].due_at.slice(0,4))
-
-if(dueDateYear >currentYear ){
-    studenttwototalscore= studenttwototalscore+AssignmentGroup.assignments[2].points_possible
-}
+// if(dueDateYear >currentYear ){
+//     studenttwototalscore= studenttwototalscore+AssignmentGroup.assignments[2].points_possible
+// }
 
 
-console.log(`${possible} Max points possible`)
-console.log(`first student avg: ${(firstStudenttotalscore/possible)*100}. 
-Second student avg:${(studenttwototalscore/possible)*100}`)
+// console.log(`${possible} Max points possible`)
+// console.log(`first student avg: ${(firstStudenttotalscore/possible)*100}. 
+// Second student avg:${(studenttwototalscore/possible)*100}`)
 
-console.log(finalArray)
+
 
 //Ok, now that I have the pieces I want, lets put it all together in a function like they want
 
@@ -157,22 +152,24 @@ function getLearnerData(info, group, [learnerSub]) {
     let firstStudenttotalscore=0;
     let studenttwototalscore=0;
     let possible=0;
+    let possible2=0;
     let currentDate = new Date();
     let currentYear= currentDate.getFullYear();
     let dueDateYear = Number(group.assignments[2].due_at.slice(0,4))
-
+    //get total possible points for all assignments
     group.assignments.forEach((element) => {
         possible +=element.points_possible;
     });
-
-    if(dueDateYear >currentYear ){
-        studenttwototalscore= studenttwototalscore+group.assignments[2].points_possible
-    }
-
+ //if the due date hasnt happened yet, subtract points possible and make new variable used in object construction
+ if(dueDateYear >currentYear ){
+    possible2 = possible-group.assignments[2].points_possible
+}
+ 
+//iterate through each element and calulate scores of the two students
     learnerSub.forEach((element) => {
         if (element.learner_id == 125) {
             firstStudenttotalscore = firstStudenttotalscore +element.submission.score;
-            firstStudenttotalscore= firstStudenttotalscore
+           
             }
         else {
             studenttwototalscore =  studenttwototalscore+element.submission.score
@@ -185,7 +182,7 @@ function getLearnerData(info, group, [learnerSub]) {
     }
     const person2 = {
         id:132,
-        avg: `${(studenttwototalscore/possible)*100}`
+        avg: `${(studenttwototalscore/possible2)*100}`
     }
    finalArray.push(person1);
    finalArray.push(person2);
