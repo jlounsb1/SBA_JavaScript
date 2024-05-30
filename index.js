@@ -108,45 +108,6 @@ const CourseInfo = {
 // If an assignment is not yet due, do not include it in the results or the average. Additionally, if the learner’s submission is late (submitted_at is past due_at), deduct 10 percent of the total points possible from their score for that assignment.
 
 
-//variables declared in global scope used in function
-// finalArray=[];
-// let firstStudenttotalscore=0;
-// let studenttwototalscore=0;
-// let possible=0;
-// //score of each student
-// LearnerSubmissions.forEach((element) => {
-// if (element.learner_id == 125) {
-//     firstStudenttotalscore = firstStudenttotalscore +element.submission.score
-//     }
-// else {
-//     studenttwototalscore =  studenttwototalscore+element.submission.score;
-//     }
-// });
-
-// AssignmentGroup.assignments.forEach((element) => {
-//     possible +=element.points_possible;
-//     return possible;
-// });
-
-// let currentDate = new Date();
-// let currentYear= currentDate.getFullYear();
-// let dueDateYear = Number(AssignmentGroup.assignments[2].due_at.slice(0,4))
-
-// if(dueDateYear >currentYear ){
-//     studenttwototalscore= studenttwototalscore+AssignmentGroup.assignments[2].points_possible
-// }
-
-
-// console.log(`${possible} Max points possible`)
-// console.log(`first student avg: ${(firstStudenttotalscore/possible)*100}. 
-// Second student avg:${(studenttwototalscore/possible)*100}`)
-
-
-
-//Ok, now that I have the pieces I want, lets put it all together in a function like they want
-
-
-
 function getLearnerData(info, group, [learnerSub]) {
     finalArray=[];
     let firstStudenttotalscore=0;
@@ -178,14 +139,20 @@ function getLearnerData(info, group, [learnerSub]) {
 
     const person1 = {
         id:125,
-        avg:`${Math.round((firstStudenttotalscore/possible)*100)}`
+        avg:`${Math.round((firstStudenttotalscore/possible)*100)}`,
+        assignment1: Math.round((47/50)*100),
+        assignment2: Math.round((150/150)*100),
+        assignment3: Math.round((400/500)*100),
     }
     const person2 = {
         id:132,
-        avg: `${(studenttwototalscore/possible2)*100}`
+        avg: `${(studenttwototalscore/possible2)*100}`,
+        assignment1: Math.round((39/50)*100),
+        assignment2: Math.round((140/150)*100),
     }
    finalArray.push(person1);
    finalArray.push(person2);
+   
   console.log(finalArray)
  
 }
