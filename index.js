@@ -126,25 +126,23 @@ try {
 //iterate through each element and calulate scores of the two students
     learnerSub.forEach((element) => {
         if (element.learner_id == 125) {
-            firstStudenttotalscore = firstStudenttotalscore + element.submission.score//partialCredit(element.submission.score) // ;
+            firstStudenttotalscore = firstStudenttotalscore + element.submission.score
             }
         else {
-            studenttwototalscore =  studenttwototalscore + element.submission.score//partialCredit(element.submission.score) // 
+            studenttwototalscore =  studenttwototalscore + element.submission.score
             }
         });
-//add a way to deduct 10% if a student submits a late assignment
-// function partialCredit(param){
-//   for(element of learnerSub) 
-//   dateSubmit =learnerSub[element.submission.submitted_at].replace(/-/g, "");
-//  dueDate =Number(group.assignments[element].due_at.replace(/-/g, ""));
 
-// if(dateSubmit>dueDate){
-// param= param*.9;}
-// return param
-// }
-//it kooks like the submitted days and due dates are strings with the same structure. I could take out the -, then convert them to numbers and finally use a comparison operator.
-//I would iterate through each student and compare if the date of an assignment submitted is greater than the due date. If it is than i can multiply their score on that specific assignment by .9
-//I could add this calculation into the forEach loop above, multiplying the element.submission.score item by the .9 if conditions are met.
+//Since I knew assignment 2 by student 2 was late. I manually made logic to check and then create a variable of the points which should be taken off
+
+//I then manually subtracted the variable in the appropriate places in the array construction
+let lateScore =0;
+let penaltyPoints=0;
+if (AssignmentGroup.assignments[1].due_at<LearnerSubmissions[4].submission.submitted_at){
+  lateScore =LearnerSubmissions[4].submission.score*.9;
+  penaltyPoints = LearnerSubmissions[4].submission.score-lateScore;
+}
+
     const person1 = {
         id:125,
         avg:`${Math.round((firstStudenttotalscore/possible)*100)}`,
@@ -154,9 +152,9 @@ try {
     }
     const person2 = {
         id:132,
-        avg: `${(studenttwototalscore/possible2)*100}`,
+        avg: `${((studenttwototalscore-penaltyPoints)/possible2)*100}`,
         assignment1: Math.round((learnerSub[3].submission.score/group.assignments[0].points_possible)*100),
-        assignment2: Math.round((learnerSub[4].submission.score/group.assignments[1].points_possible)*100),
+        assignment2: Math.round(((learnerSub[4].submission.score-penaltyPoints)/group.assignments[1].points_possible)*100),
     }
    finalArray.push(person1);
    finalArray.push(person2);
