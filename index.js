@@ -79,6 +79,7 @@ const CourseInfo = {
   ];
 
 
+
 // You should also account for potential errors in the data that your program receives. What if points_possible is 0? You cannot divide by zero. What if a value that you are expecting to be a number is instead a string? 
 //this looks like a good place for if else
 
@@ -99,6 +100,18 @@ try{
   console.log(error);
   return error;
 } 
+//seeing if there is an assignment with o points possible
+try {
+  for(i=0; i<group.assignments.length; i++)
+    if(group.assignments[i].points_possible >0){
+    continue
+  }else {
+    throw "points possible 0, there must be an ungraded assignment, please remove the assignment from the data."
+  }
+} catch(error) {
+  console.log(error);
+  return;
+}
     finalArray=[];
     let firstStudenttotalscore=0;
     let studenttwototalscore=0;
