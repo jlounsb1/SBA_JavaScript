@@ -80,7 +80,7 @@ const CourseInfo = {
 // If the learner’s submission is late (submitted_at is past due_at), deduct 10 percent of the total points possible from their score for that assignment.
 
 function getLearnerData(info, group, [learnerSub]) {
-//putting together a try catch block to put in my function
+
 //If the course info does not match course_id it should return an error saying you have the wrong course selected
 try{
   if(info.id === group.course_id) {
@@ -92,7 +92,7 @@ try{
   console.log(error);
   return error;
 } 
-//seeing if there is an assignment with o points possible
+//seeing if there is an assignment with 0 points possible
 try {
   for(i=0; i<group.assignments.length; i++)
     if(group.assignments[i].points_possible >0){
@@ -104,13 +104,13 @@ try {
   console.log(error);
   return;
 }
-    finalArray=[];
+    const finalArray=[];
     let firstStudenttotalscore=0;
     let studenttwototalscore=0;
     let possible=0;
     let possible2=0;
-    let currentDate = new Date();
-    let currentYear= currentDate.getFullYear();
+    const currentDate = new Date();
+    const currentYear= currentDate.getFullYear();
     let dueDateYear = Number(group.assignments[2].due_at.slice(0,4))
     //get total possible points for all assignments
     group.assignments.forEach((element) => {
