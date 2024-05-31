@@ -33,7 +33,7 @@ const CourseInfo = {
       }
     ]
   };
-  
+
   // The provided learner submission data.
   const LearnerSubmissions = [
     {
@@ -77,15 +77,7 @@ const CourseInfo = {
       }
     }
   ];
-
-
-
-// You should also account for potential errors in the data that your program receives. What if points_possible is 0? You cannot divide by zero. What if a value that you are expecting to be a number is instead a string? 
-//this looks like a good place for if else
-
-// If an assignment is not yet due, do not include it in the results or the average. Additionally, if the learner’s submission is late (submitted_at is past due_at), deduct 10 percent of the total points possible from their score for that assignment.
-
-
+// If the learner’s submission is late (submitted_at is past due_at), deduct 10 percent of the total points possible from their score for that assignment.
 
 function getLearnerData(info, group, [learnerSub]) {
 //putting together a try catch block to put in my function
@@ -139,27 +131,20 @@ try {
             studenttwototalscore =  studenttwototalscore+element.submission.score
             }
         });
- //since im accessing an array first, I have to go index, then it switches to objects where I can use dot notation.
- let score1= learnerSub[0].submission.score
- let score2= learnerSub[1].submission.score
- let score3=learnerSub[2].submission.score
- let score1L2=learnerSub[3].submission.score
- let score2L2=learnerSub[4].submission.score
-
 //add a way to deduct 10% if a student submits a late assignment
 
     const person1 = {
         id:125,
         avg:`${Math.round((firstStudenttotalscore/possible)*100)}`,
-        assignment1: Math.round((score1/50)*100),
-        assignment2: Math.round((score2/150)*100),
-        assignment3: Math.round((score3/500)*100),
+        assignment1: Math.round((learnerSub[0].submission.score/group.assignments[0].points_possible)*100),
+        assignment2: Math.round((learnerSub[1].submission.score/group.assignments[1].points_possible)*100),
+        assignment3: Math.round((learnerSub[2].submission.score/group.assignments[2].points_possible)*100),
     }
     const person2 = {
         id:132,
         avg: `${(studenttwototalscore/possible2)*100}`,
-        assignment1: Math.round((score1L2/50)*100),
-        assignment2: Math.round((score2L2/150)*100),
+        assignment1: Math.round((learnerSub[3].submission.score/group.assignments[0].points_possible)*100),
+        assignment2: Math.round((learnerSub[4].submission.score/group.assignments[1].points_possible)*100),
     }
    finalArray.push(person1);
    finalArray.push(person2);
