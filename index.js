@@ -108,7 +108,20 @@ const CourseInfo = {
 // If an assignment is not yet due, do not include it in the results or the average. Additionally, if the learner’s submission is late (submitted_at is past due_at), deduct 10 percent of the total points possible from their score for that assignment.
 
 
+
 function getLearnerData(info, group, [learnerSub]) {
+//putting together a try catch block to put in my function
+//If the course info does not match course_id it should return an error saying you have the wrong course selected
+try{
+  if(info.id === group.course_id) {
+    console.log("Course Selection OK")
+  } else{
+    throw "You do not have the right course selected"
+  }
+} catch(error) {
+  console.log(error);
+}
+
     finalArray=[];
     let firstStudenttotalscore=0;
     let studenttwototalscore=0;
