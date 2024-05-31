@@ -120,7 +120,8 @@ try{
   }
 } catch(error) {
   console.log(error);
-}
+  return error;
+} 
 
     finalArray=[];
     let firstStudenttotalscore=0;
