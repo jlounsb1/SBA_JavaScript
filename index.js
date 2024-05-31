@@ -149,9 +149,10 @@ try {
    finalArray.push(person1);
    finalArray.push(person2);
    
-  console.log(finalArray)
- 
+   console.log(finalArray);
+    return finalArray;
 }
 getLearnerData(CourseInfo, AssignmentGroup, [LearnerSubmissions]);
+
 
   
